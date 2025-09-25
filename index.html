@@ -4,16 +4,29 @@
     <head>
         <meta charset="utf-8" />
         <link rel="stylesheet" href="style.css" />
+        <title>Jaburdien's Blackjack</title>
+        <script src="cardGame.js" defer></script>
     </head>
     <body>
-        <img src="Images/ezgif.com-animated-gif-maker_3.png" alt="Jaburdien's Hungry Face" height="450" width="350"/>
-        <br>
-        <img id="output" />
+        <table>
+            <th>
+                <h1>😈 Jaburdien's Table 😈</h1>
+            </th>
+            <tr>
+                <td><img src="Images/ezgif.com-animated-gif-maker_3.png" alt="Jaburdien's Hungry Face" height="350" width="350"/></td>
+            </tr>
+            <tr>
+                <td id="jtext"><p>Jaburdien's Cards:</p></td>
+            </tr>
+            <tr>
+                <td><img class="output" height="150" width="150 "/><img class="output" height="150" width="150 "/></td>
+            </tr>
+        </table>
+        <button id="start">Start!</button>
         <br>
         <h1 id="winOrLose"></h1>
         <br>
         <img id="userOutput" />
         <br>
-        
     </body>
 </html>

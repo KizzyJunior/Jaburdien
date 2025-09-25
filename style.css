@@ -5,3 +5,13 @@ body {
     min-height: 100vh;
     margin: 0;
 }
+
+#start{
+    position: fixed;
+    align-self: center;
+    top: 20px;
+    height: 50px;
+    width: 100px;
+    font-size: 20px;
+    padding: 10px;
+}
