@@ -4,7 +4,7 @@
     <head>
         <meta charset="utf-8" />
         <link rel="stylesheet" href="style.css" />
-        <title>Jaburdien's Blackjack</title>
+        <title>Blackjack</title>
         <script src="cardGame.js" defer></script>
     </head>
     <body>
@@ -21,12 +21,20 @@
             <tr>
                 <td><img class="output" height="150" width="150 "/><img class="output" height="150" width="150 "/></td>
             </tr>
+            <tr>
+                <td><pid="ptext">Your Cards:</p></td>
+            </tr>
+            <tr>
+                <td class="createimg"><img class="poutput" height="150" width="150 "/><img class="poutput" height="150" width="150 "/></td>
+            </tr>
         </table>
+        <h3 id="pval">Hello</h3>
+        <h3 id="aival">Jaburdien's Hand: </h3>
         <button id="start">Start!</button>
-        <br>
+        <button id="hit">Hit!</button>
+        <button id="stand">Stand!</button>
         <h1 id="winOrLose"></h1>
-        <br>
+        <a href="index.html" id="restart">Restart</a>
         <img id="userOutput" />
-        <br>
     </body>
 </html>

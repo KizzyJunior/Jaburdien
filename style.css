@@ -9,9 +9,49 @@ body {
 #start{
     position: fixed;
     align-self: center;
-    top: 20px;
-    height: 50px;
-    width: 100px;
-    font-size: 20px;
+    top: 1px;
+    height: 40px;
+    width: 90px;
+    left: 785px;
+    font-size: 15px;
     padding: 10px;
+}
+
+#hit{
+    position: fixed;
+    align-self: center;
+    left: 475px;
+    bottom: 155px;
+    height: 40px;
+    width: 90px;
+    font-size: 15px;
+    padding: 10px;
+}
+
+#stand{
+    position: fixed;
+    align-self: center;
+    left: 375px;
+    bottom: 155px;
+    height: 40px;
+    width: 90px;
+    font-size: 15px;
+    padding: 10px;
+}
+
+#restart{
+    position: fixed; 
+    left: 10px;
+    top: 10px;
+    font-size: 30px;
+}
+
+#aival{
+    position: fixed;
+    left: 400px;
+    bottom: 373px;
+}
+
+#pval{
+
 }
