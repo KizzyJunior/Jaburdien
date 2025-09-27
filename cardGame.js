@@ -13,56 +13,78 @@ const cards = {
     12: "Cards/12card.png",
     13: "Cards/13card.png",
 };
-const x = document.getElementsByClassName("output");
-const pValue = document.getElementsByClassName("poutput");
-const aiHandVal = document.getElementById("aival");
+const ai = document.getElementsByClassName("output");
+const player = document.getElementsByClassName("poutput");
 
-function getAiCards(id){
-    const start = document.getElementById("start");
+const aiHandVal = document.getElementById("jtext"); //output msg for ai hand amount
+const pHandVal = document.getElementById("ptext"); //output msg for p hand amount
+
+const start = document.getElementById("start"); //start btn
+const hitBtn = document.getElementById("hit"); //hit btn
+
+
+let pHand = [];
+let aiHand = [];
+
+function getAiCards(){
     start.addEventListener("click", function(){
-        switchImage(id);
+        switchImage(ai, aiHand, aiHandVal);
+        switchImage(player, pHand, pHandVal);
         this.disabled = true;
+        hitBtn.disabled = false;
     })
 }
 
-function switchImage(id) {
-    for (let i = 0; i < id.length; i++){
-        id[i].src = getRandValue();
+function switchImage(elements, handArr, handArrDisplay) {
+    for (let i = 0; i < elements.length; i++){
+        const card = getRandValue();
+        elements[i].src = card.value;
+        handArr.push(getCardFaceValue(Number(card.key)));
     }
+    getValue(handArrDisplay, handArr);
 }
 
 function getRandValue() {
     const values = Object.values(cards); // returns values of obj keys
+    const keys = Object.keys(cards); //returns keys of values
     const randIndex = Math.floor(Math.random() * values.length);
-    return values[randIndex]; // returns img file path
+    const output = {
+        key: keys[randIndex],
+        value: values[randIndex],
+    };
+    return output;
 }
 
 function hit(){
-    const hit = document.getElementById("hit");
+    hitBtn.disabled = true;
     const img = document.getElementsByClassName("createimg");
-    hit.addEventListener("click", function(){
+    hitBtn.addEventListener("click", function(){
         for (let i = 0; i < img.length; i++){
             const newImg = document.createElement("img");
-            newImg.src = getRandValue();
+            const card = getRandValue();
+            newImg.src = card.value;
             img[i].appendChild(newImg);
             newImg.width = "150";
             newImg.height = "150";
             newImg.className = "poutput";
+            pHand.push(getCardFaceValue(Number(card.key)));
+            getValue(pHandVal, pHand);
         }
     })
 }
 
-function getValue(id, msg){
-    let count = 0;
-    for (const key in id){
-        count += Number(key);
-    }
-    msg.innerHTML = `Hand's Value: ${count}`;
+function getValue(msg, handArr){
+    const total = handArr.reduce((acc, curr) => acc + curr, 0);
+    msg.innerHTML = `Hand's Value: ${total}`;
+}
+
+function getCardFaceValue(cardNum){
+    if (cardNum >= 11) return 10;
+    return cardNum;
 }
 
 
-let aiHand = getAiCards(x);
 
-let pHand = getAiCards(pValue);
-pHand += hit();
-getValue(aiHand, aiHandVal);
+
+hit();
+getAiCards();
