@@ -74,6 +74,7 @@ function hit(){
             newImg.className = "poutput";
             pHand.push(getCardFaceValue(Number(card.key)));
             getValue(pHandVal, pHand);
+            checkForBust(pHand);
         }
     })
 }
@@ -81,7 +82,10 @@ function hit(){
 //get total value of hand and assign total to msg
 function getValue(msg, handArr){
     const total = handArr.reduce((acc, curr) => acc + curr, 0);
-    msg.innerHTML = `Hand's Value: ${total}`;
+    if (msg){
+        msg.innerHTML = `Hand's Value: ${total}`;
+    }
+    return total;
 }
 
 //if card is a face value card (king, jack, queen) set value to 10
@@ -99,8 +103,27 @@ function stand(){
     });
 }
 
- 
+//checks if ur above 21
+function checkForBust(deckArr){
+    let deckValue = getValue(undefined, deckArr);
+    const win = document.getElementById("winOrLose");
+    if (deckValue > 21){
+        win.innerHTML = "BUSTED";
+    }
+} 
+//ai choice logic (HOLY TOOT MY BRAIN MELTING) (wtf are these comments)
+function aiChoice(pDeck, aiDeck){
+    let pDeckValue = getValue(undefined, pDeck);
+    let aiDeckValue = getValue(undefined, aiDeck);
+    //if aiHand < pHand do something
+    if (pDeckValue > aiDeckValue){
+        
+    }
+}
+
+
 
 stand();
 hit();
 getAiCards();
+
