@@ -122,7 +122,6 @@ function stand(){
         hitBtn.disabled = true;
         pStand = true;
         aiChoice(pHand, aiHand);
-        checkWin();
     });
 }
 
@@ -133,37 +132,64 @@ function checkForBust(deckArr){
     const win = document.getElementById("winOrLose");
     if (deckValue > 21){
         win.innerHTML = "BUSTED";
+        hitBtn.disabled = true;
+        standBtn.disabled = true;
     }
 } 
 //ai choice logic (HOLY TOOT MY BRAIN MELTING) (wtf are these comments)
-function aiChoice(pDeck, aiDeck){
-    let pDeckValue = getValue(undefined, pDeck);
-    let aiDeckValue = getValue(undefined, aiDeck);
-    //if aiHand < pHand do something
-    if (aiDeckValue < 17 && !aiStand){
-        //Draw Card
+function aiChoice(pDeck, aiDeck) {
+    const win = document.getElementById("win");
+    const aiDeckValue = getValue(undefined, aiDeck);
+    const pDeckValue = getValue(undefined, pDeck);
+    // If AI has busted, stop immediately
+    if (aiDeckValue > 21) {
+        return;
+    }
+    if (pDeckValue < aiDeckValue && pStand){
+        aiStand = true;
+        checkWin();
+        return;
+    }
+    // If AI should hit again
+    if (aiDeckValue < 17 && !aiStand) {
         aiHit();
-    } else {
+
+        // Recheck after a short delay
+        setTimeout(() => aiChoice(pDeck, aiDeck), 800);
+    } 
+    // Otherwise, AI stands
+    else {
         aiStand = true;
         checkWin();
     }
 }
 
-function checkWin(){
-    if (aiStand && pStand){
-        const win = document.getElementById("win");
-        let p = getValue(undefined, pHand);
-        let ai = getValue(undefined, aiHand);
-        let pToCompare = 21 - p;
-        let aiToCompare = 21 - ai;
-        if (pToCompare < aiToCompare){
-            //plyr win
+
+function checkWin() {
+    const win = document.getElementById("win");
+    const pval = getValue(undefined, pHand);
+    const aival = getValue(undefined, aiHand);
+
+    if (pval == 21 && aival == 21) {
+        win.innerHTML = "It's Possibly a Draw?";
+    } else if (pval == 21) {
+        win.innerHTML = "Player Wins! (Reached 21)";
+    } else if (aival == 21) {
+        win.innerHTML = "Jaburiden Wins! (Reached 21)";
+    } else if (aiStand && pStand) {
+        let pToCompare = 21 - pval;
+        let aiToCompare = 21 - aival;
+
+        if (pToCompare < aiToCompare) {
             win.innerHTML = "Player Won!";
+        } else if (pToCompare > aiToCompare) {
+            win.innerHTML = "Jaburiden Won!";
         } else {
-            win.innerHTML = "Jaburdien Won!";
+            win.innerHTML = "It's a Draw!";
         }
     }
 }
+
 
 stand();
 hit();
