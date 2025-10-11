@@ -26,6 +26,9 @@ const standBtn = document.getElementById("stand"); //stand btn
 let pHand = []; //arr to store key's for value calculation
 let aiHand = []; //arr to store key's for value calculation
 
+let aiStand = false;
+let pStand = false;
+
 //on start click generate cards and enable hit & stand
 function getAiCards(){
     start.addEventListener("click", function(){
@@ -75,8 +78,25 @@ function hit(){
             pHand.push(getCardFaceValue(Number(card.key)));
             getValue(pHandVal, pHand);
             checkForBust(pHand);
+            aiChoice(pHand, aiHand);
         }
     })
+}
+//ai hit
+function aiHit(){
+    const img = document.getElementsByClassName("aicreateimg");
+    for (let i = 0; i < img.length; i++){
+        const newImg = document.createElement("img");
+        const card = getRandValue();
+        newImg.src = card.value;
+        img[i].appendChild(newImg);
+        newImg.width = "150";
+        newImg.height = "150";
+        newImg.className = "output";
+        aiHand.push(getCardFaceValue(Number(card.key)));
+        getValue(aiHandVal, aiHand);
+        checkForBust(aiHand);
+    }
 }
 
 //get total value of hand and assign total to msg
@@ -100,8 +120,12 @@ function stand(){
     standBtn.addEventListener("click", function(){
         standBtn.disabled = true;
         hitBtn.disabled = true;
+        pStand = true;
+        aiChoice(pHand, aiHand);
+        checkWin();
     });
 }
+
 
 //checks if ur above 21
 function checkForBust(deckArr){
@@ -116,14 +140,31 @@ function aiChoice(pDeck, aiDeck){
     let pDeckValue = getValue(undefined, pDeck);
     let aiDeckValue = getValue(undefined, aiDeck);
     //if aiHand < pHand do something
-    if (pDeckValue > aiDeckValue){
-        
+    if (aiDeckValue < 17 && !aiStand){
+        //Draw Card
+        aiHit();
+    } else {
+        aiStand = true;
+        checkWin();
     }
 }
 
-
+function checkWin(){
+    if (aiStand && pStand){
+        const win = document.getElementById("win");
+        let p = getValue(undefined, pHand);
+        let ai = getValue(undefined, aiHand);
+        let pToCompare = 21 - p;
+        let aiToCompare = 21 - ai;
+        if (pToCompare < aiToCompare){
+            //plyr win
+            win.innerHTML = "Player Won!";
+        } else {
+            win.innerHTML = "Jaburdien Won!";
+        }
+    }
+}
 
 stand();
 hit();
 getAiCards();
-
